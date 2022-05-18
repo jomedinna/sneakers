@@ -98,6 +98,21 @@
               <span class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}">{{ 'products.product.on_sale' | t }}</span>
             {%- endif -%}
           </div>
+
+          {% comment %} === PRE ORDER BADGE IF OUT OF STOCK === {% endcomment %}
+          {% assign out_of_stock = false %}
+          {% for variant in card_product.variants %}
+            {% if variant.inventory_quantity == 0 %}
+              {% assign out_of_stock = true %}
+            {% endif %}
+          {% endfor %}
+
+          {% if out_of_stock == true %}
+            <div class="card__badge top right">
+             <span class="badge badge--top-right color-{{ settings.sold_out_badge_color_scheme }}">Pre-Order Options</span>
+            </div>
+          {% endif %}
+          {% comment %} === END PRE ORDER BADGE IF OUT OF STOCK === {% endcomment %}
         </div>
       </div>
       <div class="card__content">
@@ -212,6 +227,21 @@
             <span class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}">{{ 'products.product.on_sale' | t }}</span>
           {%- endif -%}
         </div>
+
+        {% comment %} === PRE ORDER BADGE IF OUT OF STOCK === {% endcomment %}
+        {% assign out_of_stock = false %}
+        {% for variant in card_product.variants %}
+          {% if variant.inventory_quantity == 0 %}
+            {% assign out_of_stock = true %}
+          {% endif %}
+        {% endfor %}
+
+        {% if out_of_stock == true %}
+          <div class="card__badge top right">
+           <span class="badge badge--top-right color-{{ settings.sold_out_badge_color_scheme }}">Pre-Order Options</span>
+          </div>
+        {% endif %}
+        {% comment %} === END PRE ORDER BADGE IF OUT OF STOCK === {% endcomment %}
       </div>
     </div>
   </div>
