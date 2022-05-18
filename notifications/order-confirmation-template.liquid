@@ -189,10 +189,10 @@
           {% endif %}
         </td>
         <td class="order-list__product-description-cell">
-          {% if line.product.title %}	
-            {% assign line_title = line.product.title %}	
-          {% else %}	
-            {% assign line_title = line.title %}	
+          {% if line.product.title %} 
+            {% assign line_title = line.product.title %}  
+          {% else %}  
+            {% assign line_title = line.title %}  
           {% endif %}
 
           {% if line.quantity < line.quantity %}
@@ -202,6 +202,26 @@
           {% endif %}
 
           <span class="order-list__item-title">{{ line_title }}&nbsp;&times;&nbsp;{{ line_display }}</span><br/>
+
+          {%- for property in line.properties -%}
+            {%- assign property_first_char = property.first | slice: 0 -%}
+            {%- if property.last != blank and property_first_char != '_' -%}
+              {% if property.first == 'PRE_ORDER' %}
+              <div style="font-size:16px;font-size: 13px;color: white;background: black;padding: 5px;margin-top: 10px;width: fit-content;">
+              {% else %}
+                <div>
+              {% endif %}{{ property.first | replace: '_', ' '}}: 
+                  {%- if property.last contains '/uploads/' -%}
+                    &nbsp;<a href="{{ property.last }}" class="link" target="_blank">
+                      {{ property.last | split: '/' | last }}
+                    </a>
+                  {%- else -%}
+                    &nbsp;{{ property.last }}
+                  {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+
 
           {% if line.variant.title != 'Default Title' %}
             <span class="order-list__item-variant">{{ line.variant.title }}</span><br/>
