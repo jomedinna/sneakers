@@ -765,7 +765,23 @@ class VariantSelects extends HTMLElement {
       this.updateVariantInput();
       this.renderProductInfo();
       this.updateShareUrl();
+      this.updateVariantDate(this.currentVariant);
     }
+  }
+
+  updateVariantDate(currentVariant) {
+    const shipping_field = document.getElementById(`shipping-${this.dataset.section}`);
+
+    const variants = document.querySelectorAll('[data-variant-id]');
+    var currentValue = ''
+    variants.forEach( function(variant) {
+      variant.style.display = 'none';
+      if(variant.dataset.variantId == currentVariant.id){
+        variant.style.display = 'block'
+        currentValue = document.querySelector('[data-variant-span-id="'+currentVariant.id+'"]').innerHTML;
+        currentValue != null ? document.getElementById('TENTATIVE_SHIPPING_DATE').value = currentValue : document.getElementById('TENTATIVE_SHIPPING_DATE').value = '';
+      }
+    });
   }
 
   updateOptions() {
@@ -843,10 +859,35 @@ class VariantSelects extends HTMLElement {
         if (source && destination) destination.innerHTML = source.innerHTML;
 
         const price = document.getElementById(`price-${this.dataset.section}`);
+        const inventory = document.getElementById(`inventory-${this.dataset.section}`);
 
         if (price) price.classList.remove('visibility-hidden');
+        if (inventory) this.updateInventory(html);
         this.toggleAddButton(!this.currentVariant.available, window.variantStrings.soldOut);
       });
+  }
+
+  updateInventory(html) {
+    const id = `inventory-${this.dataset.section}`;
+    const destination = document.getElementById(id);
+    const source = html.getElementById(id);
+    console.log(source);
+    const inventory = source.value;
+
+    destination.value = source.value;
+    const line_item = document.getElementById('PRE_ORDER');
+
+    if (source.value <= 0) {
+      line_item.value = "Product will be shipped as soon as it's available.";
+      document.getElementById('product-form__submit-default').classList.add('hidden');
+      document.getElementById('product-form__submit-pre-order').classList.remove('hidden');
+    }
+
+    if (source.value >= 1) {
+      line_item.value = '';
+      document.getElementById('product-form__submit-default').classList.remove('hidden');
+      document.getElementById('product-form__submit-pre-order').classList.add('hidden');
+    }
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {

@@ -1188,3 +1188,13 @@ a.product__text {
   margin-left: 1.2rem;
   flex-shrink: 0;
 }
+
+/**********************************/
+/*      Customized Styles         */
+/**********************************/
+.variant__shipping {
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 4px;
+}

@@ -323,3 +323,23 @@ cart-remove-button .icon-remove {
     width: 60%;
   }
 }
+
+
+/**********************************/
+/*      Customized Styles         */
+/**********************************/
+.product-disclaimer {
+  border: 1px solid transparent;
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 5px;
+  text-align: left;
+  background-color: var(--gradient-base-accent-1);
+  color: var(--gradient-base-background-1);
+  word-break: break-word;
+}
+
+.product-option {
+  font-size: 1rem;
+}
